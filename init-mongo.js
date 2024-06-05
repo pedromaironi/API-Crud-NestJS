@@ -11,17 +11,17 @@ db.createUser({
 
 db = new Mongo().getDB("utesa");
 
-db.createCollection('productos');
+db.createCollection('products');
 
 db.productos.insertMany([
-    { nombre: 'Camiseta', precio: 20, categoria: 'Ropa' },
-    { nombre: 'Pantalones', precio: 30, categoria: 'Ropa' },
-    { nombre: 'Chaqueta', precio: 50, categoria: 'Ropa' },
-    { nombre: 'Calcetines', precio: 5, categoria: 'Ropa' },
-    { nombre: 'Gorra', precio: 15, categoria: 'Accesorios' },
-    { nombre: 'Bufanda', precio: 10, categoria: 'Accesorios' },
-    { nombre: 'Guantes', precio: 8, categoria: 'Accesorios' },
-    { nombre: 'Zapatos', precio: 40, categoria: 'Calzado' },
-    { nombre: 'Sandalias', precio: 25, categoria: 'Calzado' },
-    { nombre: 'Botas', precio: 60, categoria: 'Calzado' }
+    { name: 'Camiseta', price: 20, category: 'Ropa' },
+    { name: 'Pantalones', price: 30, category: 'Ropa' },
+    { name: 'Chaqueta', price: 50, category: 'Ropa' },
+    { name: 'Calcetines', price: 5, category: 'Ropa' },
+    { name: 'Gorra', price: 15, category: 'Accesorios' },
+    { name: 'Bufanda', price: 10, category: 'Accesorios' },
+    { name: 'Guantes', price: 8, category: 'Accesorios' },
+    { name: 'Zapatos', price: 40, category: 'Calzado' },
+    { name: 'Sandalias', price: 25, category: 'Calzado' },
+    { name: 'Botas', price: 60, category: 'Calzado' }
 ]);
