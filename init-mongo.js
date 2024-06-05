@@ -2,18 +2,18 @@ db.createUser({
     user: 'pedromaironi',
     pwd: '2171983',
     roles: [
-      {
-        role: 'readWrite',
-        db: 'db'
-      }
+        {
+            role: 'readWrite',
+            db: 'utesa'
+        }
     ]
-  });
-  
-  db = new Mongo().getDB("db");
-  
-  db.createCollection('productos');
-  
-  db.productos.insertMany([
+});
+
+db = new Mongo().getDB("utesa");
+
+db.createCollection('productos');
+
+db.productos.insertMany([
     { nombre: 'Camiseta', precio: 20, categoria: 'Ropa' },
     { nombre: 'Pantalones', precio: 30, categoria: 'Ropa' },
     { nombre: 'Chaqueta', precio: 50, categoria: 'Ropa' },
@@ -24,4 +24,4 @@ db.createUser({
     { nombre: 'Zapatos', precio: 40, categoria: 'Calzado' },
     { nombre: 'Sandalias', precio: 25, categoria: 'Calzado' },
     { nombre: 'Botas', precio: 60, categoria: 'Calzado' }
-  ]);
+]);

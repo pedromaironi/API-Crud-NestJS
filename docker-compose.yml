@@ -3,6 +3,7 @@ services:
   mongodb:
     image: mongo:latest
     container_name: mongodb
+    hostname: apidatabase
     environment:
       MONGO_INITDB_ROOT_USERNAME: pedromaironi
       MONGO_INITDB_ROOT_PASSWORD: 2171983
