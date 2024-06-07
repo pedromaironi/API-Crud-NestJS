@@ -25,3 +25,10 @@ db.products.insertMany([
     { name: 'Sandalias', price: 25, category: 'Calzado' },
     { name: 'Botas', price: 60, category: 'Calzado' }
 ]);
+
+db.createCollection('users');
+
+db.users.insertMany([
+    { name: 'Pedro M. Toribio', email: 'pedromaironi@gmail.com', password: '12345678' },
+    { name: 'Ivan Mendoza', email: 'ivanmendoza@gmail.com', password: '12345678' },
+]);

@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 // import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProductsModule } from './modules/products/products.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { ProductsModule } from './modules/products/products.module';
       },
     }),
 
-    ProductsModule
+    ProductsModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService]
