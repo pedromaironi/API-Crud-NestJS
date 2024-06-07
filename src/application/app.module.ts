@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
-import { ThrottlerModule } from '@nestjs/throttler';
+// import { ThrottlerModule } from '@nestjs/throttler';
 // import { UserModule } from './user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ProductosModule } from './modules/products/products.module';
+import { ProductsModule } from './modules/products/products.module';
 
 @Module({
   imports: [
@@ -18,9 +18,7 @@ import { ProductosModule } from './modules/products/products.module';
       },
     }),
 
-    // feature module
-    // UserModule,
-    ProductosModule
+    ProductsModule
   ],
   controllers: [AppController],
   providers: [AppService]

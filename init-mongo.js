@@ -13,7 +13,7 @@ db = new Mongo().getDB("utesa");
 
 db.createCollection('products');
 
-db.productos.insertMany([
+db.products.insertMany([
     { name: 'Camiseta', price: 20, category: 'Ropa' },
     { name: 'Pantalones', price: 30, category: 'Ropa' },
     { name: 'Chaqueta', price: 50, category: 'Ropa' },
