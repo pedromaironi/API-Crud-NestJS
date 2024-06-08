@@ -1,6 +1,6 @@
 // eslint-disable-next-line hexagonal-architecture/enforce
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './application/modules/app/app.module.js';
+import { AppModule } from './infrastructure/modules/app/app.module.js';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import helmet from 'helmet';
 import * as compression from 'compression';
