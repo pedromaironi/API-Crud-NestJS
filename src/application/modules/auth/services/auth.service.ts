@@ -20,13 +20,19 @@ export class AuthService {
     return null;
   }
 
-  async login(user: User): Promise<{ access_token: string }> {
+  // async generateToken(user: User): Promise<string> {
+  //   const payload = { username: user.username, sub: user.id };
+  //   return this.jwtService.sign(payload);
+  // }
+
+  async login(user: User): Promise<{ access_token: string; user: User }> {
     const payload = { username: user.username, sub: user.id };
+    const accessToken = this.jwtService.sign(payload);
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: accessToken,
+      user: user,
     };
   }
-
   async register(createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
   }

@@ -10,6 +10,8 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
+    // console.log(process.env.JWT_SECRET);
+
     return this.authService.register(createUserDto);
   }
 

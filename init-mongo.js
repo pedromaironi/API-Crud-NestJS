@@ -28,7 +28,3 @@ db.products.insertMany([
 
 db.createCollection('users');
 
-db.users.insertMany([
-    { name: 'Pedro M. Toribio', email: 'pedromaironi@gmail.com', password: '12345678' },
-    { name: 'Ivan Mendoza', email: 'ivanmendoza@gmail.com', password: '12345678' },
-]);
