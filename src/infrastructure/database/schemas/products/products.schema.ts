@@ -11,7 +11,7 @@ export class Product {
   name: string;
 
   @Prop({ required: true })
-  price: number;
+  price: number;  
 
   @Prop({ required: true })
   category: string;

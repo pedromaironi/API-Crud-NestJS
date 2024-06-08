@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SqsService } from '../services/sqs/sqs.service';
+import { SqsService } from '../../../application/services/sqs/sqs.service';
 
 @Injectable()
 export class SendMessageUseCase {
