@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { ProductUseCases } from '../../../application/use-cases/product/product.use-cases';
-import { CreateProductDto } from '../../../application/dto/product/createProduct.dto';
+import { ProductUseCases } from '../../../domain/use-cases/product/product.use-cases';
+import { CreateProductDto } from '../../dto/product/createProduct.dto';
 import { Product } from '../../entities/product/product.entity';
 
 @Injectable()
