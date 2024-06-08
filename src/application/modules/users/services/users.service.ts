@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../../../../infrastructure/database/schemas/user/user.schema';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from '../dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -20,5 +20,14 @@ export class UsersService {
       password: hashedPassword,
     });
     return newUser.save();
+  }
+
+  async findAll(): Promise<User[]> {
+    const users = await this.userModel.find().exec();
+    return users.map(user => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...result } = user.toObject();
+      return result as unknown as User;
+    });
   }
 }
