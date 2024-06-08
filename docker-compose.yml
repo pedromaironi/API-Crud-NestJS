@@ -19,5 +19,15 @@ services:
       timeout: 10s
       retries: 3
     restart: unless-stopped
+
+  elasticmq:
+    image: softwaremill/elasticmq
+    container_name: elasticmq
+    networks:
+      - server-network
+    ports:
+      - "9324:9324"
+    restart: unless-stopped
+
 networks:
   server-network:

@@ -1,12 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
+import { AppController } from '../infrastructure/adapters/controllers/application/app.controller';
 import { ConfigModule } from '@nestjs/config';
-import { AppService } from './app.service';
+import { AppService } from './services/application/app.service';
 // import { ThrottlerModule } from '@nestjs/throttler';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProductsModule } from './modules/products/products.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { SqsModule } from 'src/infrastructure/sqs/sqs.module';
+import { MessagesController } from 'src/infrastructure/adapters/controllers/sqs/messages.controller';
+import { SendMessageUseCase } from './use-cases/send-message.use-case';
 
 @Module({
   imports: [
@@ -21,9 +24,10 @@ import { AuthModule } from './modules/auth/auth.module';
 
     ProductsModule,
     UsersModule,
-    AuthModule
+    AuthModule,
+    SqsModule
   ],
-  controllers: [AppController],
-  providers: [AppService]
+  controllers: [AppController, MessagesController],
+  providers: [AppService, SendMessageUseCase]
 })
 export class AppModule {}

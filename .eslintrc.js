@@ -5,7 +5,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin'],
+  plugins: ['@typescript-eslint/eslint-plugin', "hexagonal-architecture"],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
@@ -23,5 +23,12 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     "prettier/prettier": 0,
   },
-  
+  overrides: [
+    {
+      files: ["src/**/*.ts"],
+      rules: {
+        "hexagonal-architecture/enforce": ["error"],
+      },
+    },
+  ]
 };
