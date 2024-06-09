@@ -5,7 +5,7 @@ import { CreateProductDto } from 'src/domain/dto/product/createProduct.dto';
 import { ProductRepository } from '../../../domain/repository/product/product.repository';
 
 @Injectable()
-export class ProductUseCases implements ProductInterface{
+export class ProductUseCases implements ProductInterface {
   constructor(private readonly productInterface: ProductRepository) {}
 
   async createProduct(productDto: CreateProductDto): Promise<Product> {
@@ -18,7 +18,10 @@ export class ProductUseCases implements ProductInterface{
     await this.productInterface.deleteProduct(productId);
   }
 
-  async updateProduct(productId: string, productDto: CreateProductDto): Promise<Product> {
+  async updateProduct(
+    productId: string,
+    productDto: CreateProductDto,
+  ): Promise<Product> {
     const { name, price, category } = productDto;
     const product = new Product(name, price, category);
     return this.productInterface.updateProduct(productId, product);

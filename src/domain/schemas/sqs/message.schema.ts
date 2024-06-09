@@ -1,6 +1,11 @@
-import { Schema } from 'mongoose';
+import { Schema, Document } from 'mongoose';
 
 export const MessageSchema = new Schema({
-  body: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
+  action: { type: String, required: true },
+  message: { type: String, required: true },
 });
+
+export interface MessageDocument extends Document {
+  action: string;
+  message: string;
+}
