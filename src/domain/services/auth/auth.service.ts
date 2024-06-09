@@ -31,7 +31,7 @@ export class AuthService {
     return {
       access_token: accessToken,
       user: user,
-    };
+      };
   }
   async register(createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);

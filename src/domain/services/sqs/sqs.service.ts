@@ -1,23 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { SQS } from 'aws-sdk';
 
 @Injectable()
 export class SqsService {
-  private sqs: SQS;
+  public sqs: SQS;
 
-  constructor(private configService: ConfigService) {
+  constructor() {
     this.sqs = new SQS({
-      endpoint: this.configService.get<string>('AWS_SQS_ENDPOINT'),
-      region: this.configService.get<string>('AWS_REGION'),
-      accessKeyId: this.configService.get<string>('AWS_ACCESS_KEY_ID'),
-      secretAccessKey: this.configService.get<string>('AWS_SECRET_ACCESS_KEY'),
+      endpoint: process.env.AWS_SQS_ENDPOINT, 
+      region: process.env.AWS_REGION,
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     });
   }
 
-  async sendMessage(queueUrl: string, messageBody: string) {
+  async sendMessage(messageBody: string) {
     const params = {
-      QueueUrl: queueUrl,
+      QueueUrl: `${process.env.AWS_SQS_ENDPOINT}/queue/test`,
       MessageBody: messageBody,
     };
 
