@@ -20,14 +20,23 @@ services:
       retries: 3
     restart: unless-stopped
 
-  elasticmq:
+  elasticmq_cluster_1:
     image: softwaremill/elasticmq
-    container_name: elasticmq
+    container_name: elasticmq_cluster_1
     networks:
       - server-network
     ports:
       - "9324:9324"
     restart: unless-stopped
+  
+  # elasticmq_cluster_2:
+  #   image: softwaremill/elasticmq
+  #   container_name: elasticmq_cluster_2
+  #   networks:
+  #     - server-network
+  #   ports:
+  #     - "9325:9325"
+  #   restart: unless-stopped
 
 networks:
   server-network:

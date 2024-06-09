@@ -35,7 +35,6 @@ export class ElasticMQMessageSenderAdapter implements MessageSender {
       .promise()
       .then(() => {
         console.log('Cola creada: 🚀', this.queueUrl);
-        console.log(this.sqs);
       })
       .catch((error) => {
         console.error('Error al crear la cola:', error);
@@ -44,12 +43,6 @@ export class ElasticMQMessageSenderAdapter implements MessageSender {
 
   async sendMessage(message: any): Promise<void>  {
     try {
-      if (!this.sqs) {
-        console.log('hola');
-        console.log(this.sqs);
-        console.log(this.queueUrl);
-        console.log(message);
-      }
       if (!this.sqs || !this.queueUrl) {
         throw new Error('Cluster no inicializado. Send');
       }

@@ -51,7 +51,7 @@ export class ElasticMQMessageReceiverAdapter {
           });
           console.log('Mensaje recibido y guardado en la DB:', message.Body);
           await this.deleteMessage(this.queueUrl, message.ReceiptHandle);
-          console.log('Mesaje eliminada: ❌', message.ReceiptHandle);
+          console.log('ID: ❌', message.ReceiptHandle);
           // await this.sqs.deleteQueue(params).promise();
           // console.log('Cola eliminada: ❌', this.queueUrl);
         }
