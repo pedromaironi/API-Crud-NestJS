@@ -1,42 +1,31 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { SqsService } from './sqs.service';
-import { messageService } from './message.service';
+import { SqsService } from '../../../domain/services/sqs/sqs.service';
+import { MessageRepository } from '../../../domain/repository/sqs/messageRepository.repository';
+import { Message } from '../../entities/sqs/message.entity';
 
 @Injectable()
 export class SqsListener implements OnModuleInit {
-  private readonly queueUrl = 'http://localhost:9324/queue/test'; // Ajusta esto según tu configuración
-
   constructor(
     private readonly sqsService: SqsService,
-    private readonly _messageService: messageService,
+    private readonly messageRepository: MessageRepository,
   ) {}
 
-  async onModuleInit() {
-    this.listenForMessages();
+  onModuleInit() {
+    this.listenToQueue();
   }
 
-  private async listenForMessages(): Promise<void> {
+  async listenToQueue() {
+    const queueUrl = `${process.env.AWS_SQS_ENDPOINT}/queue/test`;
+    
     while (true) {
-      const params = {
-        QueueUrl: this.queueUrl,
-        MaxNumberOfMessages: 1,
-        WaitTimeSeconds: 20,
-      };
-
-      const response = await this.sqsService.sqs.receiveMessage(params).promise();
+      const response = await this.sqsService.receiveMessages(queueUrl);
       const messages = response.Messages;
-
+      
       if (messages) {
         for (const message of messages) {
-          console.log('Mensaje recibido:', message.Body);
-          await this._messageService.saveMessage(message.Body);
-
-          // Eliminar el mensaje de la cola después de procesarlo
-          const deleteParams = {
-            QueueUrl: this.queueUrl,
-            ReceiptHandle: message.ReceiptHandle,
-          };
-          await this.sqsService.sqs.deleteMessage(deleteParams).promise();
+          const body = message.Body;
+          const newMessage = new Message(body);
+          await this.messageRepository.saveMessage(newMessage);
         }
       }
     }

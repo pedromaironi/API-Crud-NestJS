@@ -22,4 +22,13 @@ export class SqsService {
 
     return this.sqs.sendMessage(params).promise();
   }
+
+  async receiveMessages(queueUrl: string) {
+    const params = {
+      QueueUrl: queueUrl,
+      MaxNumberOfMessages: 10,
+      WaitTimeSeconds: 10,
+    };
+    return this.sqs.receiveMessage(params).promise();
+  }
 }

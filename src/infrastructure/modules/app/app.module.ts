@@ -8,6 +8,8 @@ import { UsersModule } from '../users/users.module';
 import { AuthModule } from '../auth/auth.module';
 import { SqsModule } from '../sqs/sqs.module';
 import { MongooseConfigModule } from '../database/MongooseConfig.module';
+import { SqsInterceptor } from 'src/application/interceptors/sqs.interceptor';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -18,7 +20,13 @@ import { MongooseConfigModule } from '../database/MongooseConfig.module';
     AuthModule,
     SqsModule
   ],
+  
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: SqsInterceptor,
+    },
+  ]
 })
 export class AppModule {}
