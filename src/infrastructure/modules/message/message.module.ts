@@ -7,6 +7,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { MessageSchema } from 'src/domain/schemas/sqs/message.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MessageSaverService } from 'src/domain/services/message/MessageSaverService.service';
+import { ClusterService } from 'src/domain/services/cluster/cluster.service';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { MessageSaverService } from 'src/domain/services/message/MessageSaverSer
     ElasticMQMessageSenderAdapter,
     ElasticMQMessageReceiverAdapter,
     ElasticMQMessageReceiverService,
+    ClusterService
   ],
   exports: [
     MessageService,
@@ -26,6 +28,7 @@ import { MessageSaverService } from 'src/domain/services/message/MessageSaverSer
     ElasticMQMessageSenderAdapter,
     ElasticMQMessageReceiverAdapter,
     ElasticMQMessageReceiverService,
+    ClusterService
   ],
 })
 export class MessageModule {}

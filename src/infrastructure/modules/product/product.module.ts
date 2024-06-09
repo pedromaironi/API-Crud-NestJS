@@ -5,18 +5,18 @@ import { ProductController } from '../../controllers/product/product.controller'
 import { ProductSchema } from '../../../domain/schemas/products/products.schema';
 import { ProductUseCases } from '../../../domain/use-cases/product/product.use-cases';
 import { ProductRepository } from '../../../domain/repository/product/product.repository';
-import { ElasticMQMessageSenderAdapter } from '../../../domain/services/message/mqMessageSender.service';
+import { MessageModule } from '../message/message.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Product', schema: ProductSchema }]),
-    
+    MessageModule
   ],
   providers: [
     ProductService,
     ProductUseCases,
     ProductRepository,
-    ElasticMQMessageSenderAdapter
+
   ],
   controllers: [ProductController],
   exports: [ProductService, ProductUseCases, ProductRepository],

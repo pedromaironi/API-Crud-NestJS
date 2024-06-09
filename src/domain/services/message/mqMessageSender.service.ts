@@ -4,28 +4,55 @@ import { SQS } from 'aws-sdk';
 
 @Injectable()
 export class ElasticMQMessageSenderAdapter implements MessageSender {
-  private readonly sqs: SQS;
-  private readonly queueUrl: string = 'http://localhost:9324/queue/my-queue';
-  private readonly queueName: string = 'my-queue';
+  public sqs: SQS;
+  private queueUrl: string;
 
-  constructor() {
+  constructor() {}
+
+  initializeCluster(
+    endpoint: string,
+    region: string,
+    accessKeyId: string,
+    secretAccessKey: string,
+    queueUrl: string,
+    queueName: string,
+  ): void {
     this.sqs = new SQS({
-      endpoint: process.env.AWS_SQS_ENDPOINT,
-      region: process.env.AWS_REGION,
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      endpoint,
+      region,
+      accessKeyId,
+      secretAccessKey,
     });
 
-      const paramsInit = {
-        QueueName: this.queueName,
-      };
+    this.queueUrl = queueUrl;
 
-      this.sqs.createQueue(paramsInit).promise();
+    const params = {
+      QueueName: queueName,
+    };
 
+    this.sqs
+      .createQueue(params)
+      .promise()
+      .then(() => {
+        console.log('Cola creada: 🚀', this.queueUrl);
+        console.log(this.sqs);
+      })
+      .catch((error) => {
+        console.error('Error al crear la cola:', error);
+      });
   }
 
-  async sendMessage(message: any): Promise<void> {
+  async sendMessage(message: any): Promise<void>  {
     try {
+      if (!this.sqs) {
+        console.log('hola');
+        console.log(this.sqs);
+        console.log(this.queueUrl);
+        console.log(message);
+      }
+      if (!this.sqs || !this.queueUrl) {
+        throw new Error('Cluster no inicializado. Send');
+      }
 
       const params = {
         QueueUrl: this.queueUrl,

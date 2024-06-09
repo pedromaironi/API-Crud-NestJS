@@ -11,6 +11,7 @@ import { MongooseConfigModule } from '../database/MongooseConfig.module';
 // import { SqsInterceptor } from 'src/application/interceptors/sqs.interceptor';
 // import { APP_INTERCEPTOR } from '@nestjs/core';
 import { MessageModule } from '../message/message.module';
+import { ClusterService } from 'src/domain/services/cluster/cluster.service';
 
 @Module({
   imports: [
@@ -31,4 +32,10 @@ import { MessageModule } from '../message/message.module';
     // },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private readonly clusterService: ClusterService) {}
+
+  async onModuleInit() {
+    await this.clusterService.initializeClusters();
+  }
+}
