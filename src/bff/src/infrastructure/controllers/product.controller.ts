@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, Req } from '@nestjs/common';
-import { Product } from 'src/domain/interfaces/product.interface';
-import { ProductService } from 'src/domain/services/product.service';
+import { Product } from '../../domain/interfaces/product.interface';
+import { ProductService } from '../../domain/services/product.service';
 
 @Controller('products')
 export class ProductController {
