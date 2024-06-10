@@ -23,18 +23,4 @@ EXPOSE 3000
 
 CMD ["npm", "start"]
 
-WORKDIR /pedromaironi/src/bff
-
-COPY package.json .
-
-RUN npm install
-
-COPY . .
-
-# COPY .env ./
-
-RUN npm run build
-
-EXPOSE 4000
-
-CMD ["npm", "start"]
+LABEL name="nestjs"
