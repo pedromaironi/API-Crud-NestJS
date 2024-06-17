@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongodb-secret
+type: Opaque
+data:
+  mongo-uri: bW9uZ29kYitzcnY6Ly9wZWRyb21haXJvbmk6PHBhc3N3b3JkPkBhcHBjcnVkY2x1c3Rlcm1vbmdvLnRienp3Lm1vbmdvZGIubmV0Lz9yZXRyeVdyaXRlcz10cnVlJnc9bWFqb3JpdHkmYXBwTmFtZT1BcHBDcnVkQ2x1c3Rlck1vbmdv
+  mongo-user: cGVkcm9tYWlyb25p
+  mongo-password: MjE3MTk4Mw==
