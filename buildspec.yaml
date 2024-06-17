@@ -7,11 +7,11 @@ phases:
   build:
     commands:
       - docker build -t nestjs -f ./App/Dockerfile .
-      - docker tag nestjs:latest 860172129109.dkr.ecr.us-east-1.amazonaws.com/app-repo:v4.0
+      - docker tag nestjs:latest 860172129109.dkr.ecr.us-east-1.amazonaws.com/app-repo:4.0
 
       - docker build -t nestjs-bff -f ./Bff/Dockerfile .
-      - docker tag nestjs:latest 860172129109.dkr.ecr.us-east-1.amazonaws.com/bff-repo:v2.0
+      - docker tag nestjs:latest 860172129109.dkr.ecr.us-east-1.amazonaws.com/bff-repo:2.0
   post_build:
     commands:
-      - docker push 860172129109.dkr.ecr.us-east-1.amazonaws.com/app-repo:v4.0
-      - docker push 860172129109.dkr.ecr.us-east-1.amazonaws.com/bff-repo:v2.0
+      - docker push 860172129109.dkr.ecr.us-east-1.amazonaws.com/app-repo:4.0
+      - docker push 860172129109.dkr.ecr.us-east-1.amazonaws.com/bff-repo:2.0
