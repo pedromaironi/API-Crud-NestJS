@@ -1,0 +1,27 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-cluster-crudapp
+  region: us-east-1
+
+vpc:
+  id: vpc-079d8e2bfa985494b
+  subnets:
+    private:
+      us-east-1a:
+        id: subnet-0589463c580037f85
+      us-east-1b:
+        id: subnet-0de25fb20e9d718de
+  securityGroup: sg-080c95d87ead13b4d  # Añade el ID del grupo de seguridad de tu VPC aquí
+
+nodeGroups:
+  - name: standard-workers
+    instanceType: t2.micro
+    desiredCapacity: 3
+    minSize: 1
+    maxSize: 4
+    privateNetworking: true
+    iam:
+      withAddonPolicies:
+        autoScaler: true  # Si necesitas permisos adicionales para nodos
