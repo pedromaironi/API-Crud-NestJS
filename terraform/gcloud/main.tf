@@ -12,7 +12,7 @@ variable "region" {
 
 
 resource "google_container_cluster" "primary" {
-  name     = "my-cluster"
+  name     = "my-cluster-pedro"
   location = var.region
 
   node_config {
@@ -38,10 +38,10 @@ resource "google_container_cluster" "primary" {
   }
 
   # Número inicial de nodos
-  initial_node_count = 2
+  initial_node_count = 1
 
   # Configuración adicional del clúster
-  remove_default_node_pool = true  # Elimina el grupo de nodos predeterminado para personalización total
+  remove_default_node_pool = false  # Elimina el grupo de nodos predeterminado para personalización total
   logging_service          = "logging.googleapis.com/kubernetes"
   monitoring_service       = "monitoring.googleapis.com/kubernetes"
 }

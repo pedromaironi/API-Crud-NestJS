@@ -1,26 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: back-deployment
+  name: gcr.io
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: back
+      app: gcr.io
   template:
     metadata:
       labels:
-        app: back
+        app: gcr.io
     spec:
       containers:
-        - name: back
-          image: 860172129109.dkr.ecr.us-east-1.amazonaws.com/app-repo
+        - name: backend
+          image: gcr.io/ecstatic-galaxy-407119/nestjs-back
           ports:
             - containerPort: 3000
-          resources:
-            requests:
-              cpu: "100m"
-              memory: "256Mi"
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
