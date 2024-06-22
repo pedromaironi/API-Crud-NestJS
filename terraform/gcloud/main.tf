@@ -1,47 +1,151 @@
+
 provider "google" {
+  project     = var.project_id
   credentials = file("keyfile.json")
-  project = "ecstatic-galaxy-407119"
-  region  = var.region
-  zone    = "us-east1-a"
-}
-variable "region" {
-  description = "La región de Google Cloud donde se creará el clúster"
-  type        = string
-  default     = "us-east1"  
+  region      = "us-west1"
 }
 
+data "google_container_cluster" "existing_cluster" {
+  name     = "app-crud"
+  location = "us-west1"
+}
 
-resource "google_container_cluster" "primary" {
-  name     = "my-cluster-pedro"
-  location = var.region
-
-  node_config {
-    machine_type = "e2-micro"  # Utiliza una máquina de tipo e2-micro (más económica y con recursos limitados)
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/cloud-platform",
-    ]
-
-    # Configuración adicional para minimizar el uso de recursos
-    disk_size_gb = 10  # Tamaño del disco en GB
-    disk_type    = "pd-standard"  # Tipo de disco estándar
-
-    metadata = {
-      disable-legacy-endpoints = "true"  # Desactiva los endpoints heredados
-    }
-
-    # Configuración de red
+resource "kubernetes_deployment" "nestjs" {
+  metadata {
+    name = "backend"
     labels = {
-      environment = "dev"
+      app = "backend"
     }
-
-    tags = ["k8s-cluster"]
   }
 
-  # Número inicial de nodos
-  initial_node_count = 1
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "backend"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "backend"
+        }
+      }
+      spec {
+        container {
+          image = "pedromaironi/nestjs:1.0"
+          name  = "backend"
+          port {
+            container_port = 3000
+          }
+          env {
+            name  = "MONGODB_URI"
+            value = "mongodb+srv://pedromaironi:<password>@appcrudclustermongo.tbzzw.mongodb.net/?retryWrites=true&w=majority&appName=AppCrudClusterMongo"
+          }
+          env {
+            name  = "PORT"
+            value = "3000"
+          }
+          env {
+            name  = "DATABASE_NAME"
+            value = "utesa"
+          }
+          env {
+            name  = "DATABASE_USER"
+            value = "pedromaironi"
+          }
+          env {
+            name  = "DATABASE_PASS"
+            value = "2171983"
+          }
+        }
+      }
+    }
+  }
+}
 
-  # Configuración adicional del clúster
-  remove_default_node_pool = false  # Elimina el grupo de nodos predeterminado para personalización total
-  logging_service          = "logging.googleapis.com/kubernetes"
-  monitoring_service       = "monitoring.googleapis.com/kubernetes"
+resource "kubernetes_service" "nestjs" {
+  metadata {
+    name = "backend"
+  }
+  spec {
+    selector = {
+      app = "backend"
+    }
+    port {
+      protocol = "TCP"
+      port     = 80
+      target_port = 3000
+    }
+  }
+}
+
+resource "kubernetes_deployment" "nestjs-bff" {
+  metadata {
+    name = "bff"
+    labels = {
+      app = "bff"
+    }
+  }
+
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "bff"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "bff"
+        }
+      }
+      spec {
+        container {
+          image = "pedromaironi/nestjs-bff:latest"
+          name  = "bff"
+          port {
+            container_port = 4000
+          }
+        }
+      }
+    }
+  }
+}
+
+resource "kubernetes_service" "nestjs-bff" {
+  metadata {
+    name = "bff"
+  }
+  spec {
+    selector = {
+      app = "bff"
+    }
+    port {
+      protocol = "TCP"
+      port     = 80
+      target_port = 4000
+    }
+  }
+}
+
+output "kubernetes_cluster_name" {
+  value = data.google_container_cluster.existing_cluster.name
+}
+
+output "kubernetes_cluster_endpoint" {
+  value = data.google_container_cluster.existing_cluster.endpoint
+}
+
+output "kubernetes_cluster_ca_certificate" {
+  value = base64decode(data.google_container_cluster.existing_cluster.master_auth.0.cluster_ca_certificate)
+}
+
+output "kubernetes_client_certificate" {
+  value = base64decode(data.google_container_cluster.existing_cluster.master_auth.0.client_certificate)
+}
+
+output "kubernetes_client_key" {
+  value = base64decode(data.google_container_cluster.existing_cluster.master_auth.0.client_key)
 }

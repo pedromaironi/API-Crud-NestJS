@@ -7,6 +7,6 @@ spec:
     app: back  # Aquí usa el selector que coincide con las etiquetas de tu despliegue
   ports:
     - protocol: TCP
-      port: 8080         # Puerto interno del servicio dentro del clúster
-      targetPort: 3000 # Puerto en el contenedor donde corre tu aplicación
+      port: 8081         # Puerto interno del servicio dentro del clúster
+      targetPort: 4000 # Puerto en el contenedor donde corre tu aplicación
   type: LoadBalancer
