@@ -12,7 +12,7 @@ export class UserApiAdapter implements UserRepositoryInterface {
   ): Promise<{ user: User; accessToken: string }> {
     throw new Error('Method not implemented.');
   }
-  private readonly baseURL: string = 'http://app:3000/users';
+  private readonly baseURL: string = 'http://34.19.117.206/users';
 
   async findUserByUsername(username: string): Promise<User | null> {
     try {

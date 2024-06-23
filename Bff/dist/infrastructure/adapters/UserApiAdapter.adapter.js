@@ -12,7 +12,7 @@ const axios_1 = require("axios");
 const user_entity_1 = require("../../domain/entities/user.entity");
 let UserApiAdapter = class UserApiAdapter {
     constructor() {
-        this.baseURL = 'http://app:3000/users';
+        this.baseURL = 'http://34.19.117.206/users';
     }
     login(_username, _password) {
         throw new Error('Method not implemented.');

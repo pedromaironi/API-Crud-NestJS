@@ -11,7 +11,7 @@ const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
 let ProductService = class ProductService {
     constructor() {
-        this.baseURL = 'http://app:3000/products';
+        this.baseURL = 'http://34.19.117.206/products';
     }
     getRequestConfig(bearerToken) {
         return {

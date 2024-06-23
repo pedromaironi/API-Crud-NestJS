@@ -8,7 +8,7 @@ export class AuthApiAdapter implements UserRepositoryInterface{
   findUserByUsername(username: string): Promise<User> {
     throw new Error('Method not implemented.' + username);
   }
-  private readonly baseURL: string = 'http://app:3000/auth';
+  private readonly baseURL: string = 'http://34.19.117.206/auth';
 
   async login(username: string, password: string): Promise<{ user: User; accessToken: string } | null> {
     try {

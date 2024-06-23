@@ -1,0 +1,33 @@
+language: node_js
+node_js:
+  - '14'
+
+branches:
+  only:
+    - master
+    - main
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm install
+
+script:
+  - npm run build
+  - npm test
+
+before_deploy:
+  - cd ..
+  - cd App
+  - npm run build
+
+deploy:
+  provider: script
+  script: bash backend.sh
+  on:
+    branch: master
+
+notifications:
+  email: false

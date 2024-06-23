@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: backend
-          image: pedromaironi/nestjs:1.0
+          image: pedromaironi/nestjs:2.0
           ports:
             - containerPort: 3000

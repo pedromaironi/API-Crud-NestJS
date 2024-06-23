@@ -4,7 +4,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 @Injectable()
 export class ProductService {
-  private readonly baseURL: string = 'http://app:3000/products';
+  private readonly baseURL: string = 'http://34.19.117.206/products';
 
   private getRequestConfig(bearerToken: string): AxiosRequestConfig {
     return {
