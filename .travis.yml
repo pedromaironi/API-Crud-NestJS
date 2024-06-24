@@ -46,6 +46,6 @@ jobs:
 
       deploy:
         provider: script
-        script: bash ./deploy.sh
+        script: echo "Deploy"
         on:
-          branch: master  # Despliegue en la rama 'maste
+          branch: master 
