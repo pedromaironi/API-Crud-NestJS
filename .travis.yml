@@ -18,22 +18,17 @@ before_script:
   - gcloud container clusters get-credentials app-crud
   - gcloud auth configure-docker --quiet
 
-
-script:
-  - cd App
-  - docker build -t nestjs .
-  - docker tag nestjs:latest api/ecstatic-galaxy-407119/nestjs:latest
-  - docker push api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
-
 jobs:
   include:
     - stage: Backend Deployment
       name: 'Run Backend Deployment'
       script:
         - cd App
+        - npm test
         - docker build -t nestjs .
         - docker tag nestjs:latest api/ecstatic-galaxy-407119/nestjs:latest
         - docker push api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
+        - docker push api/ecstatic-galaxy-407119/nestjs:latest
 
       deploy:
         provider: script
