@@ -11,9 +11,10 @@ branches:
     - master  
 
 before_install:
-  - curl -sSL https://sdk.cloud.google.com | bash
-  - source $HOME/google-cloud-sdk/path.bash.inc
-  - gcloud components install kubectl
+  - echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+  - sudo apt-get install -y apt-transport-https ca-certificates gnupg
+  - curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+  - sudo apt-get update && sudo apt-get install -y google-cloud-sdk
 
 before_script:
   - echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
