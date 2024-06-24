@@ -20,16 +20,20 @@ before_script:
 
 
 script:
-  - docker build -t App/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest .
-  - docker run -e CI=true App/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest npm start
+  - cd App
+  - docker build -t nestjs .
+  - docker tag nestjs:latest api/ecstatic-galaxy-407119/nestjs:latest
+  - docker push api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
 
 jobs:
   include:
     - stage: Backend Deployment
       name: 'Run Backend Deployment'
       script:
-        - docker build -t App/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest .
-        - docker push App/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
+        - cd App
+        - docker build -t nestjs .
+        - docker tag nestjs:latest api/ecstatic-galaxy-407119/nestjs:latest
+        - docker push api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
 
       deploy:
         provider: script
