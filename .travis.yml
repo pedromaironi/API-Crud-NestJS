@@ -26,9 +26,8 @@ jobs:
         - cd App
         - npm test
         - docker build -t nestjs .
-        - docker tag nestjs:latest api/ecstatic-galaxy-407119/nestjs:latest
-        - docker push api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
-        - docker push api/ecstatic-galaxy-407119/nestjs:latest
+        - docker tag nestjs:latest ecstatic-galaxy-407119/api/nestjs:latest
+        - docker push ecstatic-galaxy-407119/api/nestjs:latest
 
       deploy:
         provider: script
