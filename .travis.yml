@@ -26,6 +26,7 @@ jobs:
       name: 'Run Backend Deployment'
       script:
         - cd App
+        - npm install
         - npm test
         - docker build -t nestjs .
         - docker tag nestjs:latest gcr.io/ecstatic-galaxy-407119/api/nestjs:latest
@@ -34,8 +35,8 @@ jobs:
     - stage: Bff Deployment
       name: 'Run BFF Deployment'
       script:
-        - cd ..
         - cd Bff
+        - npm install
         - npm test
         - docker build -t nestjs-bff .
         - docker tag nestjs-bff:latest gcr.io/ecstatic-galaxy-407119/api/nestjs-bff:latest
