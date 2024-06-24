@@ -17,7 +17,8 @@ before_script:
   - gcloud config set compute/zone $GCLOUD_COMPUTE_ZONE
   - gcloud container clusters get-credentials app-crud
   - gcloud auth configure-docker --quiet
-  - docker login -u _json_key --password-stdin https://gcr.io < ${HOME}/gcloud-service-key.json
+  - echo "Logging in to Google Container Registry"
+  - echo $GCLOUD_SERVICE_KEY | docker login -u _json_key --password-stdin https://gcr.io
 
 jobs:
   include:
