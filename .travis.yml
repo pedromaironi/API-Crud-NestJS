@@ -36,6 +36,8 @@ jobs:
       name: 'Run BFF Deployment'
       script:
         - cd Bff
+        - git add .
+        - git commit -m "Test"
         - npm install
         - npm test
         - docker build -t nestjs-bff .
