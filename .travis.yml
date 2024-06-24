@@ -18,7 +18,7 @@ before_script:
   - gcloud container clusters get-credentials app-crud
   - gcloud auth configure-docker --quiet
   - echo "Logging in to Google Container Registry"
-  - echo $GCLOUD_SERVICE_KEY | docker login -u _json_key --password-stdin https://gcr.io
+  - docker login -u _json_key --password-stdin https://gcr.io < ${HOME}/gcloud-service-key.json
 
 jobs:
   include:
