@@ -16,6 +16,8 @@ before_script:
   - gcloud config set project $GCLOUD_PROJECT_ID
   - gcloud config set compute/zone $GCLOUD_COMPUTE_ZONE
   - gcloud container clusters get-credentials app-crud
+  - gcloud auth configure-docker --quiet
+
 
 script:
   - docker build -t App/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest .
@@ -26,9 +28,8 @@ jobs:
     - stage: Backend Deployment
       name: 'Run Backend Deployment'
       script:
-        - gcloud auth configure-docker --quiet
-        - docker build -t api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest .
-        - docker push api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
+        - docker build -t App/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest .
+        - docker push App/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
         - kubectl set image deployment/$GCLOUD_DEPLOYMENT_NAME $GCLOUD_CONTAINER_NAME_APP=api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
 
       deploy:
