@@ -30,7 +30,6 @@ jobs:
       script:
         - docker build -t App/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest .
         - docker push App/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
-        - kubectl set image deployment/$GCLOUD_DEPLOYMENT_NAME $GCLOUD_CONTAINER_NAME_APP=api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
 
       deploy:
         provider: script
