@@ -27,8 +27,8 @@ jobs:
         - cd App
         - npm test
         - docker build -t nestjs .
-        - docker tag nestjs:latest ecstatic-galaxy-407119/api/nestjs:latest
-        - docker push ecstatic-galaxy-407119/api/nestjs:latest
+        - docker tag nestjs:latest gcr.io/ecstatic-galaxy-407119/api/nestjs:latest
+        - docker push gcr.io/ecstatic-galaxy-407119/api/nestjs:latest
 
     - stage: Bff Deployment
       name: 'Run BFF Deployment'
@@ -37,8 +37,8 @@ jobs:
         - cd Bff
         - npm test
         - docker build -t nestjs-bff .
-        - docker tag nestjs-bff:latest ecstatic-galaxy-407119/api/nestjs-bff:latest
-        - docker push ecstatic-galaxy-407119/api/nestjs-bff:latest
+        - docker tag nestjs-bff:latest gcr.io/ecstatic-galaxy-407119/api/nestjs-bff:latest
+        - docker push gcr.io/ecstatic-galaxy-407119/api/nestjs-bff:latest
 
       deploy:
         provider: script
