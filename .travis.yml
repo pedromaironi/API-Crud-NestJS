@@ -17,6 +17,7 @@ before_script:
   - gcloud config set compute/zone $GCLOUD_COMPUTE_ZONE
   - gcloud container clusters get-credentials app-crud
   - gcloud auth configure-docker --quiet
+  - docker login -u _json_key --password-stdin https://gcr.io < ${HOME}/gcloud-service-key.json
 
 jobs:
   include:
@@ -28,6 +29,16 @@ jobs:
         - docker build -t nestjs .
         - docker tag nestjs:latest ecstatic-galaxy-407119/api/nestjs:latest
         - docker push ecstatic-galaxy-407119/api/nestjs:latest
+
+    - stage: Bff Deployment
+      name: 'Run BFF Deployment'
+      script:
+        - cd ..
+        - cd Bff
+        - npm test
+        - docker build -t nestjs-bff .
+        - docker tag nestjs-bff:latest ecstatic-galaxy-407119/api/nestjs-bff:latest
+        - docker push ecstatic-galaxy-407119/api/nestjs-bff:latest
 
       deploy:
         provider: script
