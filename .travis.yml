@@ -1,0 +1,43 @@
+dist: bionic
+language: node_js
+node_js: '16'
+
+sudo: required
+services:
+  - docker
+
+branches:
+  only:
+    - master  
+
+before_install:
+  - curl -sSL https://sdk.cloud.google.com | bash
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components install kubectl
+
+before_script:
+  - echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
+  - gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+  - gcloud config set project $GCLOUD_PROJECT_ID
+  - gcloud config set compute/zone $GCLOUD_COMPUTE_ZONE
+  - gcloud container clusters get-credentials $GCLOUD_CLUSTER_NAME
+
+script:
+  - docker build -t App/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest .
+  - docker run -e CI=true App/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest npm start
+
+jobs:
+  include:
+    - stage: Backend Deployment
+      name: 'Run Backend Deployment'
+      script:
+        - gcloud auth configure-docker
+        - docker build -t api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest .
+        - docker push api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
+        - kubectl set image deployment/$GCLOUD_DEPLOYMENT_NAME $GCLOUD_CONTAINER_NAME_APP=api/$GCLOUD_PROJECT_ID/$GCLOUD_CONTAINER_NAME_APP:latest
+
+      deploy:
+        provider: script
+        script: bash ./deploy.sh
+        on:
+          branch: master  # Despliegue en la rama 'maste
