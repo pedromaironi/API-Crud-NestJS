@@ -36,6 +36,8 @@ jobs:
       name: 'Run BFF Deployment'
       script:
         - cd Bff
+        - git add .
+        - git commit -m "Test"
         - npm install
         - npm test
         - docker build -t nestjs-bff .
@@ -44,6 +46,6 @@ jobs:
 
       deploy:
         provider: script
-        script: bash ./deploy.sh
+        script: echo "Deploy"
         on:
-          branch: master  # Despliegue en la rama 'maste
+          branch: master 
