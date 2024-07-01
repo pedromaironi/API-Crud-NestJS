@@ -12,6 +12,7 @@ import { MongooseConfigModule } from '../database/MongooseConfig.module';
 // import { APP_INTERCEPTOR } from '@nestjs/core';
 import { MessageModule } from '../message/message.module';
 import { ClusterService } from 'src/domain/services/cluster/cluster.service';
+import { OrdersModule } from '../orders/orders.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ClusterService } from 'src/domain/services/cluster/cluster.service';
     UsersModule,
     AuthModule,
     // SqsModule,
+    OrdersModule
   ],
   controllers: [AppController],
   providers: [

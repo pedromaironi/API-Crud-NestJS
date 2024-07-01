@@ -1,14 +1,13 @@
-# Usa una imagen base de Python
-FROM python:3.9-slim
+FROM python:3.11-slim
 
-# Crea el directorio de trabajo
 WORKDIR /app
 
-# Copia los scripts al directorio de trabajo
-COPY generate_backup.py register_backup.py /app/
+COPY generate_backup.py .
+COPY register_backup.py .
+COPY requirements.txt .
 
-# Instala las dependencias necesarias
-RUN pip install pandas pymongo
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install pymongo pandas boto3
 
-# Comando por defecto para ejecutar
-CMD ["bash", "-c", "python generate_backup.py && python register_backup.py"]
+CMD ["python", "generate_backup.py && python register_backup.py"]
+
