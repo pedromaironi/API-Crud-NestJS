@@ -1,3 +1,4 @@
 pymongo
 pandas
+boto3
 openpyxl

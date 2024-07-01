@@ -39,7 +39,7 @@ export class OrdersService {
       from: 'pedrocode29@gmail.com',
       to: order.email,
       subject: 'Confirmación de Orden',
-      text: `Estimado ${order.customerName},\n\nSu orden ha sido confirmada.\n\nDetalles de la Orden:\n\nProducto: ${order.productName}\nCantidad: ${order.quantity}\nFecha de Orden: ${order.createdAt}\n\nGracias por su compra.`,
+      text: `Estimado ${order.customerName},\n\nSu orden ha sido confirmada.\n\nDetalles de la Orden:\n\nProducto: ${order.productName}\nCantidad: ${order.quantity}\nFecha de Orden: ${new Date().toLocaleString()}\n\nGracias por su compra.`,
     };
 
     await transporter.sendMail(mailOptions);

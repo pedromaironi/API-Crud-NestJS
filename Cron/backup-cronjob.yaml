@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: db-backup-cron
 spec:
-  schedule: "0 8 * * *"  # Programado para ejecutarse a las 8 AM todos los días
+  schedule: "0 0 * * *" 
   jobTemplate:
     spec:
       template:
@@ -29,5 +29,7 @@ spec:
             - name: BUCKET_NAME
               value: "bucket-react-pedro"
             - name: BACKUP_FILE
-              value: "/backup/backup.xlsx" 
+              value: "user_backup.xlsx" 
+            - name: BACKUP_PRODUCT_FILE
+              value: "products_backup.xlsx" 
           restartPolicy: OnFailure
